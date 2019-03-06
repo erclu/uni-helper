@@ -1,0 +1,65 @@
+{
+  "lastUpdated": "2019-02-26T16:40:05.688Z",
+  "courses": {
+    "architettura degli elaboratori": {
+      "acronym": "AdE",
+      "color": "YELLOW"
+    },
+    "logica": {
+      "acronym": "L",
+      "color": "RED"
+    },
+    "sistemi operativi": {
+      "acronym": "SO",
+      "color": null
+    },
+    "programmazione": {
+      "acronym": "P",
+      "color": null
+    },
+    "basi di dati": {
+      "acronym": "BdD",
+      "color": null
+    },
+    "programmazione ad oggetti": {
+      "acronym": "PaO",
+      "color": null
+    },
+    "reti e sicurezza": {
+      "acronym": "ReS",
+      "color": "PALE_RED"
+    },
+    "algoritmi e strutture dati": {
+      "acronym": "AeSD",
+      "color": "ORANGE"
+    },
+    "automi e linguaggi formali": {
+      "acronym": "AeLF",
+      "color": null
+    },
+    "calcolo numerico": {
+      "acronym": "CN",
+      "color": "GREEN"
+    },
+    "probabilita' e statistica": {
+      "acronym": "PeS",
+      "color": "PALE_GREEN"
+    },
+    "programmazione concorrente e distribuita": {
+      "acronym": "PCeD",
+      "color": null
+    },
+    "ricerca operativa": {
+      "acronym": "RO",
+      "color": "PALE_BLUE"
+    },
+    "tecnologie web": {
+      "acronym": "TW",
+      "color": "MAUVE"
+    },
+    "ingegneria del software": {
+      "acronym": "IdS",
+      "color": "CYAN"
+    }
+  }
+}
