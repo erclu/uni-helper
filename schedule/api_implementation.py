@@ -1,10 +1,12 @@
 """wrapper for relevant google python api methods"""
 # pylint: disable=E1101
 import json
-import os
+from pathlib import Path
+
 # from datetime import datetime as dt
 
 from google.oauth2.credentials import Credentials
+
 # from google.oauth2 import id_token
 # from google.auth.transport import requests
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -12,9 +14,9 @@ from googleapiclient.discovery import build
 
 from courses import VALID_COURSES
 
-CREDS_FOLDER = os.path.join(os.path.dirname(__file__), '.credentials')
-CLIENT_SECRETS_FILE = os.path.join(CREDS_FOLDER, 'client_secret.json')
-CREDS_FILENAME = os.path.join(CREDS_FOLDER, "refresh_token.json")
+CREDS_FOLDER: Path = Path(__file__).parent.joinpath(".credentials")
+CLIENT_SECRETS_FILE: Path = CREDS_FOLDER / "client_secret.json"
+CREDS_FILENAME: Path = CREDS_FOLDER / "refresh_token.json"
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar",
@@ -23,10 +25,19 @@ SCOPES = [
 ]
 
 
-def get_authenticated_service(api_name, api_version):
+def get_authenticated_service(api_name: str, api_version: str):
+    """returns specified google api service
 
-    if os.path.exists(CREDS_FILENAME):
-        credentials = Credentials.from_authorized_user_file(CREDS_FILENAME)
+    Args:
+        api_name (str): can be one of sheets, calendar, drive
+        api_version (str)
+
+    Returns:
+        [type]: [description]
+    """
+
+    if CREDS_FILENAME.exists():
+        credentials = Credentials.from_authorized_user_file(str(CREDS_FILENAME))
         # TODO make request to the access token endpoint???
 
         # FIXME verifying token
@@ -38,7 +49,7 @@ def get_authenticated_service(api_name, api_version):
 
         # if idinfo['iss'] not in ['accounts.google.com',
         #                          'https://accounts.google.com']:
-        #     # os.remove(CREDS_FILENAME)
+        #     # CREDS_FILENAME.unlink()
         #     raise ValueError('Wrong issuer.')
 
     else:
@@ -60,7 +71,7 @@ def get_authenticated_service(api_name, api_version):
             "scopes": credentials.scopes,
         }
 
-        with open(CREDS_FILENAME, 'w') as outfile:
+        with CREDS_FILENAME.open("w") as outfile:
             json.dump(creds_data, outfile)
 
     return build(api_name, api_version, credentials=credentials)
@@ -70,16 +81,20 @@ UNI_CALENDAR_ID = "frij0gsijkrjegt7nk18noiqrc@group.calendar.google.com"
 
 
 class MyCalendarBatchInsert:
+    """google api calendar service to insert events via a batch request"""
+
     def __init__(self, callback=None):
 
         self._service = get_authenticated_service("calendar", "v3")
         self._batch = self._service.new_batch_http_request(callback=callback)
 
     def add(self, event, callback=None, request_id=None):
+        """adds an event to be inserted by the request"""
         request = self._service.events().insert(calendarId=UNI_CALENDAR_ID, body=event)
         self._batch.add(request, request_id, callback)
 
     def execute(self):
+        """executes the batch request"""
         return self._batch.execute()
 
 
@@ -125,10 +140,13 @@ def get_last_modified() -> str:
     return response["modifiedTime"]
 
 
-def get_table_content():
-    with open(VALID_COURSES, "r", encoding="utf-8") as file:
-        content = json.load(file)
-    return content
+def get_table_content() -> object:
+    """gets the content of local file with the courses table
+
+    Returns:
+        object:
+    """
+    return json.load(VALID_COURSES.read_text(encoding="utf-8"))
 
 
 def update_courses_colors():
@@ -158,7 +176,7 @@ def update_courses_colors():
 
         table["lastUpdated"] = last_modified
 
-        with open(VALID_COURSES, "w", encoding="utf-8") as outfile:
+        with VALID_COURSES.open("w", encoding="utf-8") as outfile:
             json.dump(table, outfile, ensure_ascii=False)
 
         print("table updated")
