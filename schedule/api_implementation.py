@@ -1,4 +1,5 @@
-#pylint: disable=E1101
+"""wrapper for relevant google python api methods"""
+# pylint: disable=E1101
 import json
 import os
 # from datetime import datetime as dt
@@ -16,9 +17,9 @@ CLIENT_SECRETS_FILE = os.path.join(CREDS_FOLDER, 'client_secret.json')
 CREDS_FILENAME = os.path.join(CREDS_FOLDER, "refresh_token.json")
 
 SCOPES = [
-  'https://www.googleapis.com/auth/calendar',
-  'https://www.googleapis.com/auth/drive.metadata.readonly',
-  'https://www.googleapis.com/auth/spreadsheets.readonly'
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/drive.metadata.readonly",
+    "https://www.googleapis.com/auth/spreadsheets.readonly",
 ]
 
 
@@ -41,21 +42,22 @@ def get_authenticated_service(api_name, api_version):
         #     raise ValueError('Wrong issuer.')
 
     else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-          CLIENT_SECRETS_FILE, SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
         credentials = flow.run_local_server(
-          host='localhost',
-          port=8080,
-          authorization_prompt_message='Please visit this URL: {url}',
-          success_message=
-          'The auth flow is complete; you may close this window.',
-          open_browser=True)
+            host="localhost",
+            port=8080,
+            authorization_prompt_message="Please visit this URL: {url}",
+            success_message="The auth flow is complete; you may close this window.",
+            open_browser=True,
+        )
 
         creds_data = {
-          'token': None, 'refresh_token': credentials.refresh_token,
-          'token_uri': credentials.token_uri, 'client_id':
-            credentials.client_id, 'client_secret': credentials.client_secret,
-          'scopes': credentials.scopes
+            "token": None,
+            "refresh_token": credentials.refresh_token,
+            "token_uri": credentials.token_uri,
+            "client_id": credentials.client_id,
+            "client_secret": credentials.client_secret,
+            "scopes": credentials.scopes,
         }
 
         with open(CREDS_FILENAME, 'w') as outfile:
@@ -64,19 +66,17 @@ def get_authenticated_service(api_name, api_version):
     return build(api_name, api_version, credentials=credentials)
 
 
-UNI_CALENDAR_ID = 'frij0gsijkrjegt7nk18noiqrc@group.calendar.google.com'
+UNI_CALENDAR_ID = "frij0gsijkrjegt7nk18noiqrc@group.calendar.google.com"
 
 
-class MyCalendarBatchInsert():
-
+class MyCalendarBatchInsert:
     def __init__(self, callback=None):
 
-        self._service = get_authenticated_service('calendar', 'v3')
+        self._service = get_authenticated_service("calendar", "v3")
         self._batch = self._service.new_batch_http_request(callback=callback)
 
     def add(self, event, callback=None, request_id=None):
-        request = self._service.events().insert(
-          calendarId=UNI_CALENDAR_ID, body=event)
+        request = self._service.events().insert(calendarId=UNI_CALENDAR_ID, body=event)
         self._batch.add(request, request_id, callback)
 
     def execute(self):
@@ -108,14 +108,20 @@ class MyCalendarBatchInsert():
 #           event['summary'])
 
 # The ID and range of the ClassSchedule spreadsheet.
-SPREADSHEET_ID = '12Bs9eSLuUO7gNTsiUTwERPo-KGZFfJjRkjWzEJ7t8Kk'
-RANGE_NAME = 'Esami!B7:C21'
+SPREADSHEET_ID = "12Bs9eSLuUO7gNTsiUTwERPo-KGZFfJjRkjWzEJ7t8Kk"
+RANGE_NAME = "Esami!B7:C21"
 
 
-def get_last_modified():
-    service = get_authenticated_service('drive', 'v3')
-    response = service.files().get(
-      fileId=SPREADSHEET_ID, fields="modifiedTime").execute()
+def get_last_modified() -> str:
+    """get the last modified time for the spreadsheet containing classes info
+
+    Returns:
+        str: string containing time of last modification in isoformat
+    """
+    service = get_authenticated_service("drive", "v3")
+    response = (
+        service.files().get(fileId=SPREADSHEET_ID, fields="modifiedTime").execute()
+    )
     return response["modifiedTime"]
 
 
@@ -132,12 +138,14 @@ def update_courses_colors():
     if last_modified > table["lastUpdated"]:
         print("getting file changes...")
 
-        service = get_authenticated_service('sheets', 'v4')
+        service = get_authenticated_service("sheets", "v4")
 
-        response = service.spreadsheets().values().get(
-          spreadsheetId=SPREADSHEET_ID,
-          range=RANGE_NAME,
-          majorDimension="ROWS").execute()
+        response = (
+            service.spreadsheets()
+            .values()
+            .get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, majorDimension="ROWS")
+            .execute()
+        )
         values = response["values"]
 
         for row in values:
@@ -158,7 +166,7 @@ def update_courses_colors():
         print("table is up do date")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # print_upcoming_events(5)
     # print("----------------------------------")
     update_courses_colors()

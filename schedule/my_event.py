@@ -7,8 +7,7 @@ from pytz import timezone
 from courses import MyCourses
 
 
-class MyBaseEvent():
-
+class MyBaseEvent:
     def __init__(self, summary, location, description):
         self.summary: str = summary
         self.location: str = location
@@ -27,7 +26,8 @@ class MyEvent(MyBaseEvent):
 
     Can be created from an ical event, and converted to a google event resource
     """
-    pattern = re.compile(r' ([a-zA-Z0-9]+?) \[(.+?)\]')
+
+    pattern = re.compile(r" ([a-zA-Z0-9]+?) \[(.+?)\]")
 
     def __init__(self, summary, start_time, end_time, location, description):
         super().__init__(summary, location, description)
@@ -47,8 +47,9 @@ class MyEvent(MyBaseEvent):
 
     def __repr__(self):
         return (
-          f"{self.summary}, {self.start_time} - {self.end_time}"
-          f" @ {self.location}; {self.description}.")
+            f"{self.summary}, {self.start_time} - {self.end_time}"
+            f" @ {self.location}; {self.description}."
+        )
 
     @classmethod
     def from_ical_event(cls, event):
@@ -61,14 +62,13 @@ class MyEvent(MyBaseEvent):
         if not isinstance(event, VEvent):
             raise TypeError()
 
-        summary = str(event['summary'])
-        description = str(event['description'])
+        summary = str(event["summary"])
+        description = str(event["description"])
 
-        if 'location' in event:
-            location = str(event['location'])
+        if "location" in event:
+            location = str(event["location"])
         else:
-            description = description.replace(summary + ' ', '').replace(
-              ' Lezione', '')
+            description = description.replace(summary + " ", "").replace(" Lezione", "")
             it = cls.pattern.finditer(description)
             description = cls.pattern.sub("", description)
 
@@ -79,27 +79,29 @@ class MyEvent(MyBaseEvent):
             for el in it:
                 matches.append(f"{el.group(1)} ({el.group(2)})")
 
-            location = (", ".join(matches))
+            location = ", ".join(matches)
 
-        start: datetime = event['dtstart'].dt
+        start: datetime = event["dtstart"].dt
 
-        #TODO: make some sick subclassing to distinguish all day events!
-        if event['dtend'] is None and start.hour == 0 and start.minute == 0:
+        # TODO: make some sick subclassing to distinguish all day events!
+        if event["dtend"] is None and start.hour == 0 and start.minute == 0:
             # dayafter = start.day + 1
             start = start.replace(hour=8, minute=30)
             end = start.replace(hour=18)
             summary += "chiusura uni?"
         else:
-            end = event['dtend'].dt
+            end = event["dtend"].dt
 
         return cls(summary, start, end, location, description)
 
     def to_gcal_event(self):
         event = {
-          "kind": "calendar#event", "summary": self.summary, "description":
-            self.description, "location": self.location,
-          "start": {"dateTime": self.start_time.isoformat()},
-          "end": {"dateTime": self.end_time.isoformat()}
+            "kind": "calendar#event",
+            "summary": self.summary,
+            "description": self.description,
+            "location": self.location,
+            "start": {"dateTime": self.start_time.isoformat()},
+            "end": {"dateTime": self.end_time.isoformat()},
         }
 
         try:
@@ -111,10 +113,10 @@ class MyEvent(MyBaseEvent):
 
     def event_id(self):
         raw_id = "summary{}week{}start{}end{}".format(
-          self.summary.lower(),
-          self.start_time.isocalendar()[1],
-          self.start_time.isoformat(),
-          self.end_time.isoformat(),
+            self.summary.lower(),
+            self.start_time.isocalendar()[1],
+            self.start_time.isoformat(),
+            self.end_time.isoformat(),
         )
 
         valid_id = re.sub(r"[^a-z0-9]", "", raw_id)
@@ -122,8 +124,7 @@ class MyEvent(MyBaseEvent):
         return valid_id
 
 
-class MyAllDayEvent(MyBaseEvent): #TODO finish this...
-
+class MyAllDayEvent(MyBaseEvent):  # TODO finish this...
     def __init__(self, summary, start_date, end_date, location, description):
         super().__init__(self, summary, location, description)
 
@@ -144,13 +145,15 @@ class MyAllDayEvent(MyBaseEvent): #TODO finish this...
 
     def to_gcal_event(self):
         event = {
-          "kind": "calendar#event", "summary": self.summary, "description":
-            self.description, "location": self.location,
-          "start": {"date": self.start_date.isoformat()},
-          "end": {"date": self.end_date.isoformat()}
+            "kind": "calendar#event",
+            "summary": self.summary,
+            "description": self.description,
+            "location": self.location,
+            "start": {"date": self.start_date.isoformat()},
+            "end": {"date": self.end_date.isoformat()},
         }
 
-        #TODO reduce code duplication
+        # TODO reduce code duplication
 
         try:
             event["colorId"] = MyCourses.get_course_color(self.summary)

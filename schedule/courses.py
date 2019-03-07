@@ -2,22 +2,27 @@ import json
 from pathlib import Path
 
 COLORS = {
-  "PALE_BLUE": "1", "PALE_GREEN": "2", "MAUVE": "3", "PALE_RED": "4",
-  "YELLOW": "5", "ORANGE": "6", "CYAN": "7", "GRAY": "8", "BLUE": "9",
-  "GREEN": "10", "RED": "11"
+    "PALE_BLUE": "1",
+    "PALE_GREEN": "2",
+    "MAUVE": "3",
+    "PALE_RED": "4",
+    "YELLOW": "5",
+    "ORANGE": "6",
+    "CYAN": "7",
+    "GRAY": "8",
+    "BLUE": "9",
+    "GREEN": "10",
+    "RED": "11",
 }
 
-VALID_COURSES: Path = Path(__file__).parent.joinpath(
-  "resources", "courses_table.json")
+VALID_COURSES: Path = Path(__file__).parent.joinpath("resources", "courses_table.json")
 
 
 def initialize_table():
-
-    with open(VALID_COURSES, "r", encoding="utf-8") as file:
-        return json.load(file)
+    return json.load(VALID_COURSES.read_text())
 
 
-class MyCourses():
+class MyCourses:
     _table = None
 
     def __init__(self, name):
@@ -30,7 +35,7 @@ class MyCourses():
         self.name = name
         properties = MyCourses._table["courses"][self.name]
         self._acronym = properties["acronym"]
-        self._color = COLORS[properties['color']]
+        self._color = COLORS[properties["color"]]
 
     def __repr__(self):
         return f"{self.name} ({self.acronym}, {self.color})"

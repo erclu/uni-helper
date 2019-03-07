@@ -1,10 +1,10 @@
 from datetime import datetime as dt
 from requests import get
 
-#pylint: disable=C0301
+# pylint: disable=C0301
 
 
-#TODO use datetime.date class instead of datetime.datetime
+# TODO use datetime.date class instead of datetime.datetime
 def download_from_portal(week_start):
     if not isinstance(week_start, dt):
         raise TypeError(f"{week_start} is not a datetime object")
@@ -34,7 +34,7 @@ def download_from_portal(week_start):
 
     # II sem II e III anno
     query_string = {
-      'form-type': ['corso'], #XXX why lists?
+      'form-type': ['corso'], # XXX why lists?
       'list': ['0'],
       'faculty_group': ['0'],
       'anno': ['2018'],
