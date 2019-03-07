@@ -1,7 +1,9 @@
+"""imports events to google calendar. Options via CLI"""
 import argparse
 from datetime import datetime as dt
 from datetime import timedelta as td
 from pathlib import Path
+from typing import List
 
 from icalendar import Calendar as VCalendar
 from icalendar import Event as VEvent
@@ -13,7 +15,12 @@ from my_event import MyEvent
 
 
 def log(arg: str):
-    print(arg)
+    """basic logger
+
+    Args:
+        arg (str): string to log
+    """
+    print(dt.now().isoformat() + " - " + arg)
 
 
 def parse_ics_file(filename):
@@ -22,12 +29,15 @@ def parse_ics_file(filename):
         return VCalendar.from_ical(file.read())
 
 
-def parse_ical(cal, weeks_to_filter):
+def parse_ical(cal: VCalendar, weeks_to_filter: int) -> MyEvent:
     """builds a my_event.MyEvent object.
 
-    args:
-        cal -- an icalendar.Calendar object
-        weeks_to_filter -- self explanatory
+    Args:
+        cal (VCalendar)
+        weeks_to_filter (int)
+
+    Returns:
+        [MyEvent]
     """
     # if "prodid" not in cal:
     #     cal.add("prodid", "-//ErcLu//UniPD class schedule//IT")
@@ -61,7 +71,13 @@ def upload_to_google_calendar(events):
     return batch.execute()
 
 
-def make_test_content():
+# TODO move to tests!
+def make_test_content() -> VCalendar:
+    """builds test ics file
+
+    Returns:
+        VCalendar: the test file
+    """
     cal = VCalendar()
     # cal.add("VERSION", "2.0")
     cal.add("prodid", "-//ErcLu//test ical file//IT")
@@ -78,7 +94,7 @@ def make_test_content():
         # event.add("description", f"description #{x}")
         event.add(
             "description",
-            f"test event #{x} COGNOME1 NOME1, COGNOME2 NOME2 aula [posto dell'aula]"
+            f"test event #{x} COGNOME1 NOME1, COGNOME2 NOME2 aula [posto dell'aula]",
         )
 
         cal.add_component(event)
@@ -86,7 +102,15 @@ def make_test_content():
     return cal
 
 
-def parse_arguments(argv):
+def parse_arguments(argv: List[str]) -> argparse.Namespace:
+    """CLI arguments parser
+
+    Args:
+        argv (List[str])
+
+    Returns:
+        argparse.Namespace
+    """
     parser = argparse.ArgumentParser(
         description="parses and uploads ics files to google calendar via API"
     )
@@ -158,6 +182,7 @@ def parse_arguments(argv):
 
 
 def main(argv):
+    """main script body"""
     parsed_args = parse_arguments(argv)
     log("parsed args")
 
