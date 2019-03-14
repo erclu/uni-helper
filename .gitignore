@@ -1,7 +1,12 @@
 # ignore python venv
 /env/
 
+# generic python stuff
 __pycache__
+.ropeproject
+
+#vs code folder is not needed
+.vscode
 
 # don't upload google api secrets
 .credentials
