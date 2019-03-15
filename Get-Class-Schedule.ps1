@@ -1,3 +1,3 @@
-& 'D:\_Programming\university-manager\env\Scripts\python.exe' 'D:\_Programming\university-manager\schedule\importer.py' -dvu
+& 'env\Scripts\python.exe' 'schedule\importer.py' -dvu
 Write-Host -NoNewline "Press any key to close..."
 $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
