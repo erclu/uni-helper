@@ -1,4 +1,8 @@
 """imports events to google calendar. Options via CLI"""
+# TODO keep local version of calendar to keep ids and stuff and avoid duplicates etc
+# TODO handle grey elements
+
+import argparse  # TODO refactor with click
 from datetime import datetime
 from datetime import timedelta as td
 from pathlib import Path
@@ -13,7 +17,7 @@ from download_cal import download_from_portal
 from my_event import MyEvent
 
 
-def log(arg: str):
+def log(arg: str) -> None:
     """basic logger
 
     Args:

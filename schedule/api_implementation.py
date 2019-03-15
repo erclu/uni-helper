@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-# from datetime import datetime as dt
+# from datetime import datetime
 
 from google.oauth2.credentials import Credentials
 
@@ -12,11 +12,11 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-from courses import VALID_COURSES
+from courses import VALID_COURSES, get_table_content
 
-CREDS_FOLDER: Path = Path(__file__).parent.joinpath(".credentials")
-CLIENT_SECRETS_FILE: Path = CREDS_FOLDER / "client_secret.json"
-CREDS_FILENAME: Path = CREDS_FOLDER / "refresh_token.json"
+CREDS_FOLDER: Path = Path(__file__).resolve().parents[1].joinpath(".credentials")
+CLIENT_SECRETS_FILE: Path = CREDS_FOLDER/"client_secret.json"
+CREDS_FILENAME: Path = CREDS_FOLDER/"refresh_token.json"
 
 SCOPES = [
   "https://www.googleapis.com/auth/calendar",
@@ -101,7 +101,7 @@ class MyCalendarBatchInsert:
 # def print_upcoming_events(how_many):
 #     """requests upcoming events"""
 
-#     now = dt.utcnow().isoformat() + "Z"
+#     now = datetime.utcnow().isoformat() + "Z"
 
 #     service = get_authenticated_service('calendar', 'v3')
 
@@ -140,16 +140,10 @@ def get_last_modified() -> str:
     return response["modifiedTime"]
 
 
-def get_table_content() -> object:
-    """gets the content of local file with the courses table
-
-    Returns:
-        object:
-    """
-    return json.load(VALID_COURSES.read_text(encoding="utf-8"))
-
-
 def update_courses_colors():
+    """updates the local file by requesting the content of the google sheet with
+    the courses colors
+    """
     last_modified = get_last_modified()
     table = get_table_content()
 

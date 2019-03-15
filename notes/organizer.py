@@ -10,6 +10,7 @@ from svglib.svglib import SvgRenderer as svg_renderer
 NOTES_PATH: Path = Path("D:/Google Drive/UploadedNotes")
 
 
+# TODO manage missing classes
 class Bookmark:
     """represents a bookmark in a page.
 
@@ -55,6 +56,7 @@ class Page:
 
     @property
     def bookmarks(self) -> List[Bookmark]:
+        """List of bookmarks on this page"""
         if self._bookmarks is None:
             self.load()
 
@@ -62,12 +64,14 @@ class Page:
 
     @property
     def drawing(self):
+        """Returns a rendered Reportlab Drawing instance"""
         if self._drawing is None:
             self.load()
 
         return self._drawing
 
     def load(self) -> None:
+        """performs intensive loading operations lazily"""
 
         print(f"loading {self._path.name}...", end="")
 
@@ -101,7 +105,7 @@ def generate_folder_names(courses, folder: Path):
             courses[course_name]["folder"] = found
 
 
-class Course:
+class Course:  # TODO refactor to external package
     """represents one of the courses i'm attending"""
 
     root_folder: Path = Path("D:/Documenti/__Università 2.0")
@@ -226,18 +230,21 @@ class CourseNotes:
         self.pages: List[Page] = pages
 
     def last_modified_page(self) -> datetime:
+        """Return the most recently modified page"""
         most_recent_page = max(self.pages, key=lambda x: x.last_modified)
 
         return most_recent_page.last_modified
 
-    def update_pdf(self):
+    def update_pdf(self) -> None:
+        """Checks whether the notes pdf is up to date"""
         if self.last_modified_page() > self.pdf.last_modified():
             print("need to remake {}".format(self.pdf.title))
             self.create_pdf()
         else:
             print("{} is up to date...".format(self.pdf.title))
 
-    def create_pdf(self):
+    def create_pdf(self) -> None:
+        """Creates this course notes pdf file"""
         print(f"making {self.pdf.title}")
         if self.pdf.exists():
             self.pdf.path.unlink()

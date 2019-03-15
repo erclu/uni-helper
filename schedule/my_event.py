@@ -1,3 +1,5 @@
+"""Contains classes for my specific implementation of an event"""
+
 from datetime import datetime, date
 import re
 
@@ -8,6 +10,8 @@ from courses import MyCourses
 
 
 class MyBaseEvent:
+    """base event class"""
+
     def __init__(self, summary, location, description):
         self.summary: str = summary
         self.location: str = location
@@ -15,10 +19,10 @@ class MyBaseEvent:
 
     @classmethod
     def from_ical_event(cls, event):
-        pass
+        """Abstract method"""
 
     def to_gcal_event(self):
-        pass
+        """Abstract method"""
 
 
 class MyEvent(MyBaseEvent):
@@ -111,7 +115,8 @@ class MyEvent(MyBaseEvent):
 
         return event
 
-    def event_id(self):
+    def event_id(self) -> str:
+        """Calculates the id for this event """
         raw_id = "summary{}week{}start{}end{}".format(
           self.summary.lower(),
           self.start_time.isocalendar()[1],
@@ -125,6 +130,12 @@ class MyEvent(MyBaseEvent):
 
 
 class MyAllDayEvent(MyBaseEvent):  # TODO finish this...
+    """Represents an all day event
+
+    Raises:
+        NotImplementedError: is not implemented yet
+    """
+
     def __init__(self, summary, start_date, end_date, location, description):
         super().__init__(self, summary, location, description)
 

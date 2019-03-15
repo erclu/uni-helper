@@ -1,3 +1,5 @@
+"""This module contains stuff relative to the course object for this package"""
+
 import json
 from pathlib import Path
 
@@ -26,7 +28,9 @@ def get_table_content():
     return json.loads(content)
 
 
-class MyCourses:
+class MyCourses:  # TODO refactor to external package
+    """represents a course. Has a table of valid courses, loaded from a file."""
+
     _table = None
 
     def __init__(self, name):
@@ -46,24 +50,50 @@ class MyCourses:
 
     @property
     def name(self):
+        """course name
+
+        Raises:
+            ValueError: when attempting to create a non existing course
+
+        Returns:
+            str: name of the course
+        """
         return self._name
 
     @name.setter
-    def name(self, name):
+    def name(self, name: str) -> str:
         lower = name.lower()
         if lower not in MyCourses._table["courses"]:
             raise ValueError(f"{lower} is not a valid course")
         self._name = lower
 
     @property
-    def acronym(self):
+    def acronym(self) -> str:
+        """course acronym
+
+        Returns:
+            str: acronym of the course
+        """
         return self._acronym
 
     @property
-    def color(self):
+    def color(self) -> str:
+        """color of this course in google calendar
+
+        Returns:
+            str: Name of the color
+        """
         return self._color
 
     @classmethod
-    def get_course_color(cls, name):
+    def get_course_color(cls, name: str) -> str:
+        """utility method to get course color without needing a Course instance
+
+        Args:
+            name (str): name of the course to check the color for
+
+        Returns:
+            str: the color of given course
+        """
         course = cls(name)
         return course.color

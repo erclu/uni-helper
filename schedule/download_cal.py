@@ -1,10 +1,22 @@
+"""This module handles the download of schedules from the online portal"""
 from datetime import datetime
 from requests import get
 
-# pylint: disable=C0301
 
-
+# TODO download exam dates too (probably unfeasible)
 # TODO use datetime.date class instead of datetime.datetime
+def download_from_portal(week_start: datetime) -> str:
+    """downloads the schedule for a given week
+
+    Args:
+        week_start (datetime): first day of the week that has to be downloaded
+
+    Raises:
+        TypeError: argument is not a datetime object
+
+    Returns:
+        str: schedule. Is the content of an ics file.
+    """
     if not isinstance(week_start, datetime):
         raise TypeError(f"{week_start} is not a datetime object")
 
