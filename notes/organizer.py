@@ -27,9 +27,9 @@ class Bookmark:
 
     @classmethod
     def from_node(cls, node, height):
-        position = int(Page.scale * (15.0 + float(height) - float(node.get("__comy"))))
+        position = int(Page.scale*(15.0 + float(height) - float(node.get("__comy"))))
         # position = int(float(node.get("__comy")))*Page.scale
-        dtime = datetime.fromtimestamp(int(node.get("__timestamp"), 0) / 1000)
+        dtime = datetime.fromtimestamp(int(node.get("__timestamp"), 0)/1000)
 
         return cls(position, dtime)
 
@@ -37,7 +37,7 @@ class Bookmark:
 class Page:
     """represents an svg file containing part of the notes i've written"""
 
-    scale = 72 / 150
+    scale = 72/150
 
     def __init__(self, path: Path):
         if not path.exists():
@@ -83,7 +83,7 @@ class Page:
         def load_svg():
             drawing = svg_renderer(self._path).render(tree.getroot())
 
-            drawing.width = drawing.minWidth() * Page.scale
+            drawing.width = drawing.minWidth()*Page.scale
             drawing.height *= Page.scale
             drawing.scale(Page.scale, Page.scale)
             return drawing
@@ -107,33 +107,33 @@ class Course:
     root_folder: Path = Path("D:/Documenti/__Università 2.0")
 
     courses_attended = {
-        "architettura degli elaboratori": {"acronym": "AdE"},
-        "logica": {"acronym": "L"},
-        "reti e sicurezza": {"acronym": "ReS"},
-        "algoritmi e strutture dati": {"acronym": "AeSD"},
-        "calcolo numerico": {"acronym": "CN"},
-        "probabilita' e statistica": {"acronym": "PeS"},
-        "ingegneria del software": {"acronym": "IdS"},
+      "architettura degli elaboratori": {"acronym": "AdE"},
+      "logica": {"acronym": "L"},
+      "reti e sicurezza": {"acronym": "ReS"},
+      "algoritmi e strutture dati": {"acronym": "AeSD"},
+      "calcolo numerico": {"acronym": "CN"},
+      "probabilita' e statistica": {"acronym": "PeS"},
+      "ingegneria del software": {"acronym": "IdS"},
     }
 
     old_courses_attended = {
-        "reti e sicurezza": {
-            "acronym": "ReS",
-            "folder": Path(root_folder, "_21.Reti e sicurezza"),
-        },
-        "ingegneria del software": {
-            "acronym": "IdS",
-            "folder": Path(root_folder, "_31-2.Ingegneria del software"),
-        },
-        "ricerca operativa": {
-            "acronym": "RO",
-            "folder": Path(root_folder, "_31.Ricerca operativa"),
-        },
-        "tecnologie web": {
-            "acronym": "TW",
-            "folder": Path(root_folder, "_31.Tecnologie web"),
-        },
-        "probabilita' e statistica": {"acronym": "PeS", "folder": ""},
+      "reti e sicurezza": {
+        "acronym": "ReS",
+        "folder": Path(root_folder, "_21.Reti e sicurezza"),
+      },
+      "ingegneria del software": {
+        "acronym": "IdS",
+        "folder": Path(root_folder, "_31-2.Ingegneria del software"),
+      },
+      "ricerca operativa": {
+        "acronym": "RO",
+        "folder": Path(root_folder, "_31.Ricerca operativa"),
+      },
+      "tecnologie web": {
+        "acronym": "TW",
+        "folder": Path(root_folder, "_31.Tecnologie web"),
+      },
+      "probabilita' e statistica": {"acronym": "PeS", "folder": ""},
     }
 
     def __init__(self, name: str):
@@ -167,7 +167,7 @@ class Course:
         # return folder
 
         matching_folder: List(Path) = [
-            x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
+          x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
         ]
         if len(matching_folder) != 1:
             raise ValueError("something wrong with the course folder")
@@ -274,7 +274,7 @@ class CourseNotes:
         xmlns = "{" + tree.getroot().nsmap.get(None) + "}"
 
         title_node = tree.find(
-            f"/{xmlns}head/{xmlns}script/{xmlns}string[@name='docTitle']"
+          f"/{xmlns}head/{xmlns}script/{xmlns}string[@name='docTitle']"
         )
 
         assert title_node is not None
@@ -283,12 +283,12 @@ class CourseNotes:
 
         it = tree.iterfind(f"/{xmlns}body/{xmlns}object")
 
-        pages_paths: List[Path] = [Path(NOTES_PATH / obj.get("data")) for obj in it]
+        pages_paths: List[Path] = [Path(NOTES_PATH/obj.get("data")) for obj in it]
         print(f"{title}: {len(pages_paths)} pages")
 
-        assert pages_paths and all(p.exists() for p in pages_paths), (
-            "pages found while parsing html: " + pages_paths
-        )
+        assert pages_paths and all(
+          p.exists() for p in pages_paths
+        ), "pages found while parsing html: " + pages_paths
 
         pages = [Page(x) for x in pages_paths]
 

@@ -2,24 +2,28 @@ import json
 from pathlib import Path
 
 COLORS = {
-    "PALE_BLUE": "1",
-    "PALE_GREEN": "2",
-    "MAUVE": "3",
-    "PALE_RED": "4",
-    "YELLOW": "5",
-    "ORANGE": "6",
-    "CYAN": "7",
-    "GRAY": "8",
-    "BLUE": "9",
-    "GREEN": "10",
-    "RED": "11",
+  "PALE_BLUE": "1",
+  "PALE_GREEN": "2",
+  "MAUVE": "3",
+  "PALE_RED": "4",
+  "YELLOW": "5",
+  "ORANGE": "6",
+  "CYAN": "7",
+  "GRAY": "8",
+  "BLUE": "9",
+  "GREEN": "10",
+  "RED": "11",
 }
 
-VALID_COURSES: Path = Path(__file__).parent.joinpath("resources", "courses_table.json")
+VALID_COURSES: Path = Path(__file__).resolve().parents[1].joinpath(
+  "resources", "courses_table.json"
+)
 
 
-def initialize_table():
-    return json.load(VALID_COURSES.read_text())
+def get_table_content():
+    """gets the content of local file with the courses table"""
+    content = VALID_COURSES.read_text()
+    return json.loads(content)
 
 
 class MyCourses:
@@ -28,7 +32,7 @@ class MyCourses:
     def __init__(self, name):
         if MyCourses._table is None:
             print(f"opening {VALID_COURSES}...", end="")
-            MyCourses._table = initialize_table()
+            MyCourses._table = get_table_content()
             print(" Done.")
         self._name = None
 

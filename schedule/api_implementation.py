@@ -19,9 +19,9 @@ CLIENT_SECRETS_FILE: Path = CREDS_FOLDER / "client_secret.json"
 CREDS_FILENAME: Path = CREDS_FOLDER / "refresh_token.json"
 
 SCOPES = [
-    "https://www.googleapis.com/auth/calendar",
-    "https://www.googleapis.com/auth/drive.metadata.readonly",
-    "https://www.googleapis.com/auth/spreadsheets.readonly",
+  "https://www.googleapis.com/auth/calendar",
+  "https://www.googleapis.com/auth/drive.metadata.readonly",
+  "https://www.googleapis.com/auth/spreadsheets.readonly",
 ]
 
 
@@ -55,20 +55,20 @@ def get_authenticated_service(api_name: str, api_version: str):
     else:
         flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
         credentials = flow.run_local_server(
-            host="localhost",
-            port=8080,
-            authorization_prompt_message="Please visit this URL: {url}",
-            success_message="The auth flow is complete; you may close this window.",
-            open_browser=True,
+          host="localhost",
+          port=8080,
+          authorization_prompt_message="Please visit this URL: {url}",
+          success_message="The auth flow is complete; you may close this window.",
+          open_browser=True,
         )
 
         creds_data = {
-            "token": None,
-            "refresh_token": credentials.refresh_token,
-            "token_uri": credentials.token_uri,
-            "client_id": credentials.client_id,
-            "client_secret": credentials.client_secret,
-            "scopes": credentials.scopes,
+          "token": None,
+          "refresh_token": credentials.refresh_token,
+          "token_uri": credentials.token_uri,
+          "client_id": credentials.client_id,
+          "client_secret": credentials.client_secret,
+          "scopes": credentials.scopes,
         }
 
         with CREDS_FILENAME.open("w") as outfile:
@@ -135,7 +135,7 @@ def get_last_modified() -> str:
     """
     service = get_authenticated_service("drive", "v3")
     response = (
-        service.files().get(fileId=SPREADSHEET_ID, fields="modifiedTime").execute()
+      service.files().get(fileId=SPREADSHEET_ID, fields="modifiedTime").execute()
     )
     return response["modifiedTime"]
 
@@ -159,10 +159,9 @@ def update_courses_colors():
         service = get_authenticated_service("sheets", "v4")
 
         response = (
-            service.spreadsheets()
-            .values()
-            .get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, majorDimension="ROWS")
-            .execute()
+          service.spreadsheets().values().get(
+            spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, majorDimension="ROWS"
+          ).execute()
         )
         values = response["values"]
 

@@ -47,8 +47,8 @@ class MyEvent(MyBaseEvent):
 
     def __repr__(self):
         return (
-            f"{self.summary}, {self.start_time} - {self.end_time}"
-            f" @ {self.location}; {self.description}."
+          f"{self.summary}, {self.start_time} - {self.end_time}"
+          f" @ {self.location}; {self.description}."
         )
 
     @classmethod
@@ -96,12 +96,12 @@ class MyEvent(MyBaseEvent):
 
     def to_gcal_event(self):
         event = {
-            "kind": "calendar#event",
-            "summary": self.summary,
-            "description": self.description,
-            "location": self.location,
-            "start": {"dateTime": self.start_time.isoformat()},
-            "end": {"dateTime": self.end_time.isoformat()},
+          "kind": "calendar#event",
+          "summary": self.summary,
+          "description": self.description,
+          "location": self.location,
+          "start": {"dateTime": self.start_time.isoformat()},
+          "end": {"dateTime": self.end_time.isoformat()},
         }
 
         try:
@@ -113,10 +113,10 @@ class MyEvent(MyBaseEvent):
 
     def event_id(self):
         raw_id = "summary{}week{}start{}end{}".format(
-            self.summary.lower(),
-            self.start_time.isocalendar()[1],
-            self.start_time.isoformat(),
-            self.end_time.isoformat(),
+          self.summary.lower(),
+          self.start_time.isocalendar()[1],
+          self.start_time.isoformat(),
+          self.end_time.isoformat(),
         )
 
         valid_id = re.sub(r"[^a-z0-9]", "", raw_id)
@@ -145,12 +145,12 @@ class MyAllDayEvent(MyBaseEvent):  # TODO finish this...
 
     def to_gcal_event(self):
         event = {
-            "kind": "calendar#event",
-            "summary": self.summary,
-            "description": self.description,
-            "location": self.location,
-            "start": {"date": self.start_date.isoformat()},
-            "end": {"date": self.end_date.isoformat()},
+          "kind": "calendar#event",
+          "summary": self.summary,
+          "description": self.description,
+          "location": self.location,
+          "start": {"date": self.start_date.isoformat()},
+          "end": {"date": self.end_date.isoformat()},
         }
 
         # TODO reduce code duplication
