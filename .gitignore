@@ -1,9 +1,6 @@
-# ignore python venv
-/env/
+# don't upload google api secrets
+.credentials
 
 # generic python stuff
 __pycache__
 .ropeproject
-
-# don't upload google api secrets
-.credentials

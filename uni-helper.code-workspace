@@ -5,7 +5,7 @@
     }
   ],
   "settings": {
-    "python.pythonPath": "env\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\Luca\\.virtualenvs\\uni-helper-3lN99vej\\Scripts\\python.exe",
     "[python]": {
       "editor.rulers": [
         88
