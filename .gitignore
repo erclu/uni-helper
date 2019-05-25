@@ -4,3 +4,6 @@
 # generic python stuff
 __pycache__
 .ropeproject
+
+#mypy stuff
+.mypy_cache
