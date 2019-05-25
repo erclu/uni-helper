@@ -1,6 +1,7 @@
+"""parses and organizes the notes files i took with styluslabs write"""
+import typing
 from datetime import datetime
 from pathlib import Path
-from typing import List
 
 from lxml import etree
 from reportlab.graphics import renderPDF
@@ -55,7 +56,7 @@ class Page:
         # self.load()
 
     @property
-    def bookmarks(self) -> List[Bookmark]:
+    def bookmarks(self) -> typing.List[Bookmark]:
         """List of bookmarks on this page"""
         if self._bookmarks is None:
             self.load()
@@ -78,7 +79,7 @@ class Page:
         parser = etree.XMLParser(remove_comments=True, recover=True)
         tree = etree.parse(str(self._path), parser=parser)
 
-        def load_bookmarks() -> List[str]:
+        def load_bookmarks() -> typing.List[str]:
             xmlns = "{" + "http://www.w3.org/2000/svg" + "}"
             nodes = tree.iterfind(f"/{xmlns}g/{xmlns}path[@class='bookmark']")
             page_height = tree.find(f"/{xmlns}g").get("height")
@@ -170,7 +171,7 @@ class Course:  # TODO refactor to external package
         #         folder.mkdir(parents=True)
         # return folder
 
-        matching_folder: List(Path) = [
+        matching_folder: typing.List[Path] = [
           x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
         ]
         if len(matching_folder) != 1:
@@ -178,8 +179,8 @@ class Course:  # TODO refactor to external package
 
         return matching_folder[0]
 
-    # def get_all_pdfs(self) -> List[CoursePdf]:
-    #     notes_pdfs: List[CoursePdf] = [
+    # def get_all_pdfs(self) -> typing.List[CoursePdf]:
+    #     notes_pdfs: typing.List[CoursePdf] = [
     #       CoursePdf.from_instance(x)
     #       for x in self.folder.glob("*Appunti*.pdf")
     #     ]
@@ -225,9 +226,9 @@ class CoursePdf:
 class CourseNotes:
     """builds a course notes object from the path of the html wrapper file"""
 
-    def __init__(self, name: str, pages: List[Page]):
+    def __init__(self, name: str, pages: typing.List[Page]):
         self.pdf: CoursePdf = CoursePdf(name)
-        self.pages: List[Page] = pages
+        self.pages: typing.List[Page] = pages
 
     def last_modified_page(self) -> datetime:
         """Return the most recently modified page"""
@@ -290,7 +291,9 @@ class CourseNotes:
 
         it = tree.iterfind(f"/{xmlns}body/{xmlns}object")
 
-        pages_paths: List[Path] = [Path(NOTES_PATH/obj.get("data")) for obj in it]
+        pages_paths: typing.List[Path] = [
+          Path(NOTES_PATH/obj.get("data")) for obj in it
+        ]
         print(f"{title}: {len(pages_paths)} pages")
 
         assert pages_paths and all(
@@ -308,7 +311,7 @@ class CourseNotes:
 
 def main():
     gen = NOTES_PATH.glob("*html")
-    courses: List[CourseNotes] = [CourseNotes.from_note_html(p) for p in gen]
+    courses: typing.List[CourseNotes] = [CourseNotes.from_note_html(p) for p in gen]
 
     for course in courses:
         course.update_pdf()

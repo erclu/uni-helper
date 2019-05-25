@@ -3,10 +3,9 @@
 # TODO handle grey elements
 
 import argparse  # TODO refactor with click
-from datetime import datetime
-from datetime import timedelta as td
+import typing
+from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List
 
 from icalendar import Calendar as VCalendar
 from icalendar import Event as VEvent
@@ -51,10 +50,13 @@ def parse_ical(cal: VCalendar, weeks_to_filter: int) -> MyEvent:
     if weeks_to_filter != -1:
 
         today = datetime.now(tz("Europe/Rome")).replace(
-          hour=0, minute=0, second=0, microsecond=0
+          hour=0,
+          minute=0,
+          second=0,
+          microsecond=0,
         )
-        next_sat = today + td((5 - today.weekday()) % 7)
-        last_dt = next_sat + td(7*weeks_to_filter)
+        next_sat = today + timedelta((5 - today.weekday()) % 7)
+        last_dt = next_sat + timedelta(7*weeks_to_filter)
 
         my_events = [x for x in my_events if x.start_time < last_dt]
 
@@ -105,15 +107,8 @@ def make_test_content() -> VCalendar:
     return cal
 
 
-def parse_arguments(argv: List[str]) -> argparse.Namespace:
-    """CLI arguments parser
-
-    Args:
-        argv (List[str])
-
-    Returns:
-        argparse.Namespace
-    """
+def parse_arguments(argv: typing.List[str]) -> argparse.Namespace:
+    """CLI arguments parser"""
     parser = argparse.ArgumentParser(
       description="parses and uploads ics files to google calendar via API"
     )
@@ -202,10 +197,13 @@ def main(argv):
     elif parsed_args.download:
         if not parsed_args.when:
             today = datetime.now(tz("Europe/Rome")).replace(
-              hour=0, minute=0, second=0, microsecond=0
+              hour=0,
+              minute=0,
+              second=0,
+              microsecond=0,
             )
 
-            next_mon = today + td((0 - today.weekday()) % 7)
+            next_mon = today + timedelta((0 - today.weekday()) % 7)
 
             raw_content = download_from_portal(next_mon)
         else:

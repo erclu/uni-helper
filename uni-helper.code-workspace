@@ -5,11 +5,10 @@
     }
   ],
   "settings": {
-    "python.pythonPath": "C:\\Users\\Luca\\.virtualenvs\\uni-helper-3lN99vej\\Scripts\\python.exe",
-    "[python]": {
-      "editor.rulers": [
-        88
-      ]
+    "files.exclude": {
+      ".*_cache": true,
+      "**/__pycache__": true,
     },
+    "python.pythonPath": "D:\\Users\\erclu\\.virtualenvs\\uni-helper-5jhcOlJ8\\Scripts\\python.exe",
   }
 }
