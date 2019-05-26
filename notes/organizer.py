@@ -8,7 +8,8 @@ from reportlab.graphics import renderPDF
 from reportlab.pdfgen.canvas import Canvas
 from svglib.svglib import SvgRenderer as svg_renderer
 
-NOTES_PATH: Path = Path("D:/Google Drive/UploadedNotes")
+NOTES_PATH: Path = Path("D:/Users/erclu/Google Drive/UploadedNotes")
+COURSES_FOLDER: Path = Path("D:/Users/erclu/Documents/Università")
 
 
 # TODO manage missing classes
@@ -109,7 +110,7 @@ def generate_folder_names(courses, folder: Path):
 class Course:  # TODO refactor to external package
     """represents one of the courses i'm attending"""
 
-    root_folder: Path = Path("D:/Documenti/__Università 2.0")
+    root_folder: Path = COURSES_FOLDER
 
     courses_attended = {
       "architettura degli elaboratori": {"acronym": "AdE"},
@@ -124,19 +125,19 @@ class Course:  # TODO refactor to external package
     old_courses_attended = {
       "reti e sicurezza": {
         "acronym": "ReS",
-        "folder": Path(root_folder, "_21.Reti e sicurezza"),
+        "folder": root_folder.joinpath("_21.Reti e sicurezza"),
       },
       "ingegneria del software": {
         "acronym": "IdS",
-        "folder": Path(root_folder, "_31-2.Ingegneria del software"),
+        "folder": root_folder.joinpath("_31-2.Ingegneria del software"),
       },
       "ricerca operativa": {
         "acronym": "RO",
-        "folder": Path(root_folder, "_31.Ricerca operativa"),
+        "folder": root_folder.joinpath("_31.Ricerca operativa"),
       },
       "tecnologie web": {
         "acronym": "TW",
-        "folder": Path(root_folder, "_31.Tecnologie web"),
+        "folder": root_folder.joinpath("_31.Tecnologie web"),
       },
       "probabilita' e statistica": {"acronym": "PeS", "folder": ""},
     }
@@ -165,12 +166,6 @@ class Course:  # TODO refactor to external package
 
     @property
     def folder(self) -> Path:
-        # folder: Path = self.courses_attended[self.name.lower()]["folder"]
-        # if not folder.exists():
-        #     if "y" in input("create folder {}? (y/n) ".format(folder)):
-        #         folder.mkdir(parents=True)
-        # return folder
-
         matching_folder: typing.List[Path] = [
           x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
         ]
