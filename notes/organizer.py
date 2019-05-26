@@ -30,6 +30,7 @@ class Bookmark:
 
     @classmethod
     def from_node(cls, node, height):
+        """builds the bookmark given a node and its position"""
         position = int(Page.scale*(15.0 + float(height) - float(node.get("__comy"))))
         # position = int(float(node.get("__comy")))*Page.scale
         dtime = datetime.fromtimestamp(int(node.get("__timestamp"), 0)/1000)
@@ -101,6 +102,7 @@ class Page:
 
 # FIXME SO MANY SIDE EFFECTS I CAN'T EVEN
 def generate_folder_names(courses, folder: Path):
+    """ugly way to generate the course folders"""
     for course_name in courses:
         found = next(folder.glob("*{}*".format(course_name)), None)
         if found:
@@ -162,10 +164,12 @@ class Course:  # TODO refactor to external package
 
     @property
     def acronym(self) -> str:
+        """acronym for this course"""
         return self.courses_attended[self.name.lower()]["acronym"]
 
     @property
     def folder(self) -> Path:
+        """folder path for this course"""
         matching_folder: typing.List[Path] = [
           x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
         ]
@@ -184,6 +188,7 @@ class Course:  # TODO refactor to external package
 
 
 def notes_name_schema(arg) -> str:
+    """this is the naming template for notes files"""
     return "_Appunti {}.pdf".format(arg)
 
 
@@ -203,9 +208,11 @@ class CoursePdf:
         self.path: Path = Path(self.course.folder, notes_name_schema(self.title))
 
     def exists(self) -> bool:
+        """checks if the pdf exists"""
         return self.path.exists()
 
     def last_modified(self) -> datetime:
+        """checks when the file was last modified"""
         if not self.exists():
             return datetime.min
         timestamp = int(round(self.path.stat().st_mtime))
@@ -271,6 +278,7 @@ class CourseNotes:
 
     @classmethod
     def from_note_html(cls, path: Path):
+        """builds a course notes object from the path of the html wrapper file"""
         parser = etree.XMLParser(ns_clean=True, remove_comments=True)
         tree = etree.parse(str(path), parser)
 
@@ -289,7 +297,7 @@ class CourseNotes:
         pages_paths: typing.List[Path] = [
           Path(NOTES_PATH/obj.get("data")) for obj in it
         ]
-        print(f"{title}: {len(pages_paths)} pages")
+        print(f"filename: {path.name}, title: {title}, {len(pages_paths)} pages")
 
         assert pages_paths and all(
           p.exists() for p in pages_paths
@@ -304,7 +312,7 @@ class CourseNotes:
             raise ValueError("error on file {}".format(path)) from err
 
 
-def main():
+def main():  #pylint: disable=missing-docstring
     gen = NOTES_PATH.glob("*html")
     courses: typing.List[CourseNotes] = [CourseNotes.from_note_html(p) for p in gen]
 
