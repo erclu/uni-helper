@@ -25,6 +25,9 @@ jobs=1
 load-plugins=pylint.extensions.docparams,
              pylint.extensions.mccabe
 
+# Design checker plugin complexity value
+max-complexity=10
+
 # Pickle collected data for later comparisons.
 persistent=yes
 
@@ -65,7 +68,7 @@ disable=no-else-return
 # either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
 # it should appear only once). See also the "--disable" option for examples.
-enable=trailing-newlines
+enable=
 
 
 [REPORTS]
@@ -230,7 +233,7 @@ indent-after-paren=2
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=88
+max-line-length=80
 
 # Maximum number of lines in a module
 max-module-lines=1000
@@ -262,8 +265,8 @@ logging-modules=logging
 
 # List of note tags to take in consideration, separated by a comma.
 notes=FIXME,
-      XXX,
-      TODO
+      TODO,
+      XXX
 
 [SIMILARITIES]
 

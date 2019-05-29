@@ -10,5 +10,6 @@
       "**/__pycache__": true,
     },
     "python.pythonPath": "D:\\Users\\erclu\\.virtualenvs\\uni-helper-5jhcOlJ8\\Scripts\\python.exe",
+    "python.linting.mypyEnabled": true
   }
 }
