@@ -1,0 +1,172 @@
+{
+  "exams": [
+    {
+      "date": "lunedì 17 giugno 2019",
+      "time": "08:30 - 18:00",
+      "course": "Ingegneria del software",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "lunedì 17 giugno 2019",
+      "time": "16:30 - 18:30",
+      "course": "Logica",
+      "location": "1AD100\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "venerdì 21 giugno 2019",
+      "time": "09:30 - 13:00",
+      "course": "Reti e sicurezza",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "venerdì 21 giugno 2019",
+      "time": "14:30 - 17:30",
+      "course": "Calcolo numerico",
+      "location": "LABP140\nCOMPLESSO PAOLOTTI"
+    },
+    {
+      "date": "lunedì 24 giugno 2019",
+      "time": "09:30 - 13:00",
+      "course": "Architettura degli elaboratori",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "martedì 25 giugno 2019",
+      "time": "14:00 - 18:00",
+      "course": "Architettura degli elaboratori",
+      "location": "2BC60\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "giovedì 27 giugno 2019",
+      "time": "09:30 - 13:00",
+      "course": "Algoritmi e strutture dati",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "venerdì 28 giugno 2019",
+      "time": "09:30 - 13:00",
+      "course": "Probabilita' e statistica",
+      "location": "LU4\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "lunedì 1 luglio 2019",
+      "time": "16:30 - 18:30",
+      "course": "Logica",
+      "location": "1A150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "venerdì 5 luglio 2019",
+      "time": "14:30 - 17:30",
+      "course": "Calcolo numerico",
+      "location": "LABP140\nCOMPLESSO PAOLOTTI"
+    },
+    {
+      "date": "martedì 9 luglio 2019",
+      "time": "09:30 - 13:00",
+      "course": "Architettura degli elaboratori",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "mercoledì 10 luglio 2019",
+      "time": "09:30 - 13:00",
+      "course": "Reti e sicurezza",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "giovedì 11 luglio 2019",
+      "time": "09:30 - 13:00",
+      "course": "Algoritmi e strutture dati",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "lunedì 15 luglio 2019",
+      "time": "08:30 - 18:00",
+      "course": "Ingegneria del software",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "martedì 16 luglio 2019",
+      "time": "09:30 - 13:00",
+      "course": "Probabilita' e statistica",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "lunedì 22 luglio 2019",
+      "time": "14:00 - 18:00",
+      "course": "Architettura degli elaboratori",
+      "location": "2BC60\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "lunedì 19 agosto 2019",
+      "time": "08:30 - 18:00",
+      "course": "Ingegneria del software",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "venerdì 23 agosto 2019",
+      "time": "09:30 - 13:30",
+      "course": "Algoritmi e strutture dati (esame scritto)",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "venerdì 30 agosto 2019",
+      "time": "09:30 - 13:30",
+      "course": "Calcolo numerico (esame scritto )",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "mercoledì 4 settembre 2019",
+      "time": "14:30 - 18:00",
+      "course": "Probabilita' e statistica",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "venerdì 6 settembre 2019",
+      "time": "14:30 - 17:30",
+      "course": "Calcolo numerico",
+      "location": "LABP140\nCOMPLESSO PAOLOTTI"
+    },
+    {
+      "date": "martedì 10 settembre 2019",
+      "time": "08:30 - 18:00",
+      "course": "Ingegneria del software",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "mercoledì 11 settembre 2019",
+      "time": "09:30 - 13:30",
+      "course": "Algoritmi e strutture dati (esame scritto)",
+      "location": "P200\nCOMPLESSO PAOLOTTI"
+    },
+    {
+      "date": "lunedì 16 settembre 2019",
+      "time": "14:30 - 17:30",
+      "course": "Calcolo numerico",
+      "location": "LABP140\nCOMPLESSO PAOLOTTI"
+    },
+    {
+      "date": "mercoledì 18 settembre 2019",
+      "time": "09:30 - 13:00",
+      "course": "Probabilita' e statistica",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "mercoledì 18 settembre 2019",
+      "time": "16:00 - 19:00",
+      "course": "Logica (esame scritto)",
+      "location": "1C150\nTORRE ARCHIMEDE"
+    },
+    {
+      "date": "giovedì 19 settembre 2019",
+      "time": "14:30 - 18:00",
+      "course": "Architettura degli elaboratori ( esame scritto)",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    },
+    {
+      "date": "venerdì 20 settembre 2019",
+      "time": "09:30 - 13:30",
+      "course": "Reti e sicurezza (esame scritto )",
+      "location": "LUM250\nAULE DI VIA LUZZATTI"
+    }
+  ]
+}
