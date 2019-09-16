@@ -31,9 +31,9 @@ class Bookmark:
     @classmethod
     def from_node(cls, node, height):
         """builds the bookmark given a node and its position"""
-        position = int(Page.scale*(15.0 + float(height) - float(node.get("__comy"))))
+        position = int(Page.scale * (15.0 + float(height) - float(node.get("__comy"))))
         # position = int(float(node.get("__comy")))*Page.scale
-        dtime = datetime.fromtimestamp(int(node.get("__timestamp"), 0)/1000)
+        dtime = datetime.fromtimestamp(int(node.get("__timestamp"), 0) / 1000)
 
         return cls(position, dtime)
 
@@ -41,7 +41,7 @@ class Bookmark:
 class Page:
     """represents an svg file containing part of the notes i've written"""
 
-    scale = 72/150
+    scale = 72 / 150
 
     def __init__(self, path: Path):
         if not path.exists():
@@ -90,7 +90,7 @@ class Page:
         def load_svg():
             drawing = svg_renderer(self._path).render(tree.getroot())
 
-            drawing.width = drawing.minWidth()*Page.scale
+            drawing.width = drawing.minWidth() * Page.scale
             drawing.height *= Page.scale
             drawing.scale(Page.scale, Page.scale)
             return drawing
@@ -115,33 +115,33 @@ class Course:  # TODO refactor to external package
     root_folder: Path = COURSES_FOLDER
 
     courses_attended = {
-      "architettura degli elaboratori": {"acronym": "AdE"},
-      "logica": {"acronym": "L"},
-      "reti e sicurezza": {"acronym": "ReS"},
-      "algoritmi e strutture dati": {"acronym": "AeSD"},
-      "calcolo numerico": {"acronym": "CN"},
-      "probabilita' e statistica": {"acronym": "PeS"},
-      "ingegneria del software": {"acronym": "IdS"},
+        "architettura degli elaboratori": {"acronym": "AdE"},
+        "logica": {"acronym": "L"},
+        "reti e sicurezza": {"acronym": "ReS"},
+        "algoritmi e strutture dati": {"acronym": "AeSD"},
+        "calcolo numerico": {"acronym": "CN"},
+        "probabilita' e statistica": {"acronym": "PeS"},
+        "ingegneria del software": {"acronym": "IdS"},
     }
 
     old_courses_attended = {
-      "reti e sicurezza": {
-        "acronym": "ReS",
-        "folder": root_folder.joinpath("_21.Reti e sicurezza"),
-      },
-      "ingegneria del software": {
-        "acronym": "IdS",
-        "folder": root_folder.joinpath("_31-2.Ingegneria del software"),
-      },
-      "ricerca operativa": {
-        "acronym": "RO",
-        "folder": root_folder.joinpath("_31.Ricerca operativa"),
-      },
-      "tecnologie web": {
-        "acronym": "TW",
-        "folder": root_folder.joinpath("_31.Tecnologie web"),
-      },
-      "probabilita' e statistica": {"acronym": "PeS", "folder": ""},
+        "reti e sicurezza": {
+            "acronym": "ReS",
+            "folder": root_folder.joinpath("_21.Reti e sicurezza"),
+        },
+        "ingegneria del software": {
+            "acronym": "IdS",
+            "folder": root_folder.joinpath("_31-2.Ingegneria del software"),
+        },
+        "ricerca operativa": {
+            "acronym": "RO",
+            "folder": root_folder.joinpath("_31.Ricerca operativa"),
+        },
+        "tecnologie web": {
+            "acronym": "TW",
+            "folder": root_folder.joinpath("_31.Tecnologie web"),
+        },
+        "probabilita' e statistica": {"acronym": "PeS", "folder": ""},
     }
 
     def __init__(self, name: str):
@@ -171,7 +171,7 @@ class Course:  # TODO refactor to external package
     def folder(self) -> Path:
         """folder path for this course"""
         matching_folder: typing.List[Path] = [
-          x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
+            x for x in self.root_folder.glob("*{}*".format(self.name.lower()))
         ]
         if len(matching_folder) != 1:
             raise ValueError("something wrong with the course folder")
@@ -285,7 +285,7 @@ class CourseNotes:
         xmlns = "{" + tree.getroot().nsmap.get(None) + "}"
 
         title_node = tree.find(
-          f"/{xmlns}head/{xmlns}script/{xmlns}string[@name='docTitle']"
+            f"/{xmlns}head/{xmlns}script/{xmlns}string[@name='docTitle']"
         )
 
         assert title_node is not None
@@ -295,13 +295,13 @@ class CourseNotes:
         it = tree.iterfind(f"/{xmlns}body/{xmlns}object")
 
         pages_paths: typing.List[Path] = [
-          Path(NOTES_PATH/obj.get("data")) for obj in it
+            Path(NOTES_PATH / obj.get("data")) for obj in it
         ]
         print(f"filename: {path.name}, title: {title}, {len(pages_paths)} pages")
 
-        assert pages_paths and all(
-          p.exists() for p in pages_paths
-        ), "pages found while parsing html: " + pages_paths
+        assert pages_paths and all(p.exists() for p in pages_paths), (
+            "pages found while parsing html: " + pages_paths
+        )
 
         pages = [Page(x) for x in pages_paths]
 
@@ -312,7 +312,7 @@ class CourseNotes:
             raise ValueError("error on file {}".format(path)) from err
 
 
-def main():  #pylint: disable=missing-docstring
+def main():  # pylint: disable=missing-docstring
     gen = NOTES_PATH.glob("*html")
     courses: typing.List[CourseNotes] = [CourseNotes.from_note_html(p) for p in gen]
 

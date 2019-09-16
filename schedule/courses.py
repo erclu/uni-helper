@@ -4,21 +4,21 @@ import json
 from pathlib import Path
 
 COLORS = {
-  "PALE_BLUE": "1",
-  "PALE_GREEN": "2",
-  "MAUVE": "3",
-  "PALE_RED": "4",
-  "YELLOW": "5",
-  "ORANGE": "6",
-  "CYAN": "7",
-  "GRAY": "8",
-  "BLUE": "9",
-  "GREEN": "10",
-  "RED": "11",
+    "PALE_BLUE": "1",
+    "PALE_GREEN": "2",
+    "MAUVE": "3",
+    "PALE_RED": "4",
+    "YELLOW": "5",
+    "ORANGE": "6",
+    "CYAN": "7",
+    "GRAY": "8",
+    "BLUE": "9",
+    "GREEN": "10",
+    "RED": "11",
 }
 
 VALID_COURSES: Path = Path(__file__).resolve().parents[1].joinpath(
-  "resources", "courses_table.json"
+    "resources", "courses_table.json"
 )
 
 
