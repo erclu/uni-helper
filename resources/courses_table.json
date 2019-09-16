@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2019-03-04T12:13:43.632Z",
+  "lastUpdated": "2019-09-13T16:01:09.775Z",
   "courses": {
     "architettura degli elaboratori": {
       "acronym": "AdE",
-      "color": "YELLOW"
+      "color": "ORANGE"
     },
     "logica": {
       "acronym": "L",
@@ -31,7 +31,7 @@
     },
     "algoritmi e strutture dati": {
       "acronym": "AeSD",
-      "color": "ORANGE"
+      "color": null
     },
     "automi e linguaggi formali": {
       "acronym": "AeLF",
@@ -39,11 +39,11 @@
     },
     "calcolo numerico": {
       "acronym": "CN",
-      "color": "GREEN"
+      "color": null
     },
     "probabilita' e statistica": {
       "acronym": "PeS",
-      "color": "PALE_GREEN"
+      "color": null
     },
     "programmazione concorrente e distribuita": {
       "acronym": "PCeD",
@@ -51,11 +51,11 @@
     },
     "ricerca operativa": {
       "acronym": "RO",
-      "color": "PALE_BLUE"
+      "color": null
     },
     "tecnologie web": {
       "acronym": "TW",
-      "color": "MAUVE"
+      "color": null
     },
     "ingegneria del software": {
       "acronym": "IdS",
