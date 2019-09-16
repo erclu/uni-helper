@@ -1,4 +1,4 @@
-cd $PSScriptRoot
+Set-Location $PSScriptRoot
 pipenv run python schedule/importer.py -dvu
 Write-Host -NoNewline "Press any key to close..."
-$x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
+$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
