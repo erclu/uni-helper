@@ -43,22 +43,32 @@ def download_from_portal(week_start: datetime) -> str:
     #   'txtcorso': ['SC1167 - Informatica (Laurea)']
     # }
 
-    # II sem II e III anno
+    # # II sem II e III anno
+    # query_string = {
+    #     "form-type": "corso",
+    #     "list": "0",
+    #     "faculty_group": "0",
+    #     "anno": "2018",
+    #     "scuola": "Scuola_di_Scienze",
+    #     "corso": "SC1167",
+    #     "anno2_multi": ["000ZZ|2", "000ZZ|3"],
+    #     "anno2": ["000ZZ|2,000ZZ|3"],
+    #     "date": formatted_week_start,
+    #     "_lang": "it",
+    #     "ar_codes_": "EC501491|EC501460|EC501493|EC470124|EC501494",
+    #     "ar_select_": "true|false|true|true|true",
+    #     "txtaa": "2018/2019",
+    #     "txtcorso": "SC1167 - Informatica (Laurea)",
+    # }
+
+    # I sem I, II e III anno
     query_string = {
-        "form-type": "corso",
-        "list": "0",
-        "faculty_group": "0",
-        "anno": "2018",
-        "scuola": "Scuola_di_Scienze",
+        "anno": "2019",
         "corso": "SC1167",
-        "anno2_multi": ["000ZZ|2", "000ZZ|3"],
-        "anno2": ["000ZZ|2,000ZZ|3"],
+        "anno2": "000ZZ|1,000ZZ|2,000ZZ|3",
         "date": formatted_week_start,
-        "_lang": "it",
-        "ar_codes_": "EC501491|EC501460|EC501493|EC470124|EC501494",
-        "ar_select_": "true|false|true|true|true",
-        "txtaa": "2018/2019",
-        "txtcorso": "SC1167 - Informatica (Laurea)",
+        "ar_codes_": "EC546722|EC546719|EC530661|EC546726|EC501558|EC546720|EC546724|EC530664|EC501559|EC530665|EC501525|EC501556|EC501557",
+        "ar_select_": "false|true|false|false|true|true|false|false|false|true|false|false|false",
     }
 
     url = "http://www.gestionedidattica.unipd.it/PortaleStudenti/ec_download_ical_grid.php"  # pylint: disable=line-too-long
