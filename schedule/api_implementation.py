@@ -1,6 +1,7 @@
 """wrapper for relevant google python api methods"""
 # pylint: disable=E1101
 import json
+import typing as tp
 from pathlib import Path
 
 # from datetime import datetime
@@ -10,9 +11,10 @@ from google.oauth2.credentials import Credentials
 # from google.oauth2 import id_token
 # from google.auth.transport import requests
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build, Resource
 
 from courses import VALID_COURSES, get_table_content
+
 
 CREDS_FOLDER: Path = Path(__file__).resolve().parents[1].joinpath(".credentials")
 CLIENT_SECRETS_FILE: Path = CREDS_FOLDER / "client_secret.json"
@@ -24,16 +26,18 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets.readonly",
 ]
 
+UNI_CALENDAR_ID = "frij0gsijkrjegt7nk18noiqrc@group.calendar.google.com"
 
-def get_authenticated_service(api_name: str, api_version: str):
+
+def get_authenticated_service(api_name: str, api_version: str) -> Resource:
     """returns specified google api service
 
     Args:
         api_name (str): can be one of sheets, calendar, drive
-        api_version (str)
+        api_version (str): the api version
 
     Returns:
-        [type]: [description]
+        Resource: the requested service resource
     """
 
     if CREDS_FILENAME.exists():
@@ -77,19 +81,25 @@ def get_authenticated_service(api_name: str, api_version: str):
     return build(api_name, api_version, credentials=credentials)
 
 
-UNI_CALENDAR_ID = "frij0gsijkrjegt7nk18noiqrc@group.calendar.google.com"
+OptionalCallbackType = tp.Optional[tp.Callable[[str, str, str], None]]
 
 
 class MyCalendarBatchInsert:
     """google api calendar service to insert events via a batch request"""
 
-    def __init__(self, callback=None):
+    def __init__(self, callback: OptionalCallbackType = None) -> None:
 
         self._service = get_authenticated_service("calendar", "v3")
         self._batch = self._service.new_batch_http_request(callback=callback)
 
-    def add(self, event, callback=None, request_id=None):
+    def add(
+        self,
+        event: str,
+        callback: OptionalCallbackType = None,
+        request_id: tp.Optional[str] = None,
+    ) -> None:
         """adds an event to be inserted by the request"""
+
         request = self._service.events().insert(calendarId=UNI_CALENDAR_ID, body=event)
         self._batch.add(request, request_id, callback)
 
@@ -140,7 +150,7 @@ def get_last_modified() -> str:
     return response["modifiedTime"]
 
 
-def update_courses_colors():
+def update_courses_colors() -> None:
     """updates the local file by requesting the content of the google sheet with
     the courses colors
     """
