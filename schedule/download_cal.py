@@ -3,6 +3,7 @@ from datetime import datetime
 from requests import get
 
 
+# FIXME download link misses 2 classes of LOGICA on 20191030 (????)
 # TODO download exam dates too (probably unfeasible)
 # TODO use datetime.date class instead of datetime.datetime
 def download_from_portal(week_start: datetime) -> str:
